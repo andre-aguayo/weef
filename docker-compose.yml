@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api:/app
+    networks:
+      - weef
+  database:
+    image: postgres:13.4
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - ./data/database:/var/lib/postgresql/data:rw
+    networks:
+      - weef
+    environment:
+      POSTGRES_DB: '${DATABASE_DATABASE}'
+      POSTGRES_USER: '${DATABASE_USERNAME}'
+      POSTGRES_PASSWORD: '${DATABASE_PASSWORD}'
+
+networks:
+  weef:
+    driver: bridge
