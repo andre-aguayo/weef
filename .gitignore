@@ -1,4 +1,6 @@
 .env
+api
+data
 
 # compiled output
 /dist
