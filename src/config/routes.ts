@@ -7,4 +7,12 @@ export default {
     login: 'login',
     authTest: 'auth-test',
   },
+  event: {
+    alias: 'event',
+    add: 'create',
+    update: 'update',
+    delete: 'delete/:eventId',
+    list: 'list',
+    find: '/:eventId',
+  },
 };

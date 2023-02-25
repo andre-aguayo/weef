@@ -10,5 +10,13 @@
             "minLength": "O campo deve conter no minimo {characters} caracteres",
             "isEnum": "O campo não contém o valor esperado"
         }
+    },
+    "event": {
+        "errors": {
+            "find": "Não foi possivel encontrar o evento",
+            "add": "Não foi possivel cadastrar o evento",
+            "update": "Não foi possivel atualizar os dados do evento",
+            "remove": "Não foi possivel remover o evento"
+        }
     }
 }

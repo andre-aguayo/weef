@@ -1,13 +1,14 @@
 import { join } from 'path';
+import config from './config/config';
 import { Module } from '@nestjs/common';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { UserModule } from './modules/user/user.module';
+import { EventModule } from './modules/event/event.module';
+import { JwtAuthGuard } from './modules/user/guards/auth.guard';
 import { AcceptLanguageResolver, I18nModule } from 'nestjs-i18n';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { TranslateModule } from './modules/common/translate/translate.module';
 import { HealthCheckModule } from './modules/health-check/health-check.module';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import config from './config/config';
-import { JwtAuthGuard } from './modules/user/guards/auth.guard';
 import { HttpFilterException } from './modules/common/exception/http-filter-exception';
 import './language/pt/messages.json';
 import './language/en/messages.json';
@@ -36,6 +37,7 @@ const connection: TypeOrmModuleOptions = {
       resolvers: [AcceptLanguageResolver],
     }),
     UserModule,
+    EventModule,
     TranslateModule,
     HealthCheckModule,
   ],
