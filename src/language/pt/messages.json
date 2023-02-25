@@ -1,3 +1,14 @@
 {
-    "healthCheck": "Estou vivo"
+    "healthCheck": "Estou vivo",
+    "common": {
+        "errors": {
+            "unauthorized": "Não autorizado",
+            "unexpected": "Ocorreu um erro inesperado",
+            "isEmail": "O campo deve ser um e-mail",
+            "isString": "O campo deve ser texto",
+            "maxLength": "O campo deve conter no máximo {characters} caracteres",
+            "minLength": "O campo deve conter no minimo {characters} caracteres",
+            "isEnum": "O campo não contém o valor esperado"
+        }
+    }
 }
