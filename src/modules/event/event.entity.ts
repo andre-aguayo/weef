@@ -6,7 +6,6 @@ import { User } from '../user/user.entity';
 @Entity()
 export class Event extends SoftDeleteEntity {
   @ManyToOne(() => User)
-  @ApiProperty({ type: User })
   user: User;
 
   @Column()
