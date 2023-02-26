@@ -28,7 +28,9 @@
 
 Esta api foi constuida com o Framework [Nest](https://github.com/nestjs/nest).
 
-  
+
+## Requisitos
+- [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
 
 ## Instalação
 
