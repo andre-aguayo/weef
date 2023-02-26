@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -8,6 +8,8 @@ import { UserLoginDot } from './dto/user-login-dot';
 import { AuthDot } from './dto/auth-dot';
 import { ExceptionUnauthorized } from '../common/exception/exception-unauthorized';
 import config from '../../config/config';
+import { Exception } from '../common/exception/exception';
+import { UserAddDot } from './dto/user-add-dot';
 
 @Injectable()
 export class UserService {
@@ -52,6 +54,28 @@ export class UserService {
       user,
       token,
     };
+  }
+
+  async add(input: UserAddDot): Promise<User> {
+    const isRegistered = await this.usersRepository.findOne({
+      where: { email: input.email },
+    });
+
+    if (isRegistered) {
+      throw new Exception('messages.user.errors.isRegistered');
+    }
+
+    try {
+      const user = await this.usersRepository.save({
+        ...input,
+        password: await hash(input.password, 10),
+      });
+
+      delete user.password;
+      return user;
+    } catch (error) {
+      throw new Exception('messages.user.errors.add', error);
+    }
   }
 
   async findByID(userID: string): Promise<User> {
