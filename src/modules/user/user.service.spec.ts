@@ -4,24 +4,18 @@ import { PassportModule } from '@nestjs/passport';
 import { testingModule } from '../../test.module';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import { setDefaultEntityFields } from '../common/test/database';
 import { ExceptionUnauthorized } from '../common/exception/exception-unauthorized';
 
 describe('UserService', () => {
   let userService: UserService;
   const mockUserFindOne = jest.fn();
   const mockUserFindBy = jest.fn();
-  const mockUserSave = jest.fn((user: User) => {
-    return setDefaultEntityFields(user);
-  });
   const mockUserRepository = {
     metadata: {
       columns: [],
-      relations: [],
     },
     findOne: mockUserFindOne,
     findBy: mockUserFindBy,
-    save: mockUserSave,
   };
 
   const secret = 'fdaslkhfdsayrekjhfdsa';
@@ -53,16 +47,16 @@ describe('UserService', () => {
 
     it('should login with valid user', async () => {
       const userData = {
-        firstName: 'Ricardo',
-        lastName: 'Saraiva',
-        email: 'ricardo.saraiva@coderockr.com',
+        firstName: 'Iurru',
+        lastName: 'Test',
+        email: 'iurru@weef.com.br',
         id: 1,
         password:
           '$2b$10$uXn5EOZnFClXxs/O9IRNxOHOPbd3DJIckaqIDvvPwRNO8nq5kN/Om',
       };
       mockUserFindOne.mockReturnValueOnce(userData);
 
-      const login = 'ricardo.saraiva@coderockr.com';
+      const login = 'iurru@weef.com.br';
       const user = await userService.login({
         login,
         password: '12345678',
@@ -76,9 +70,9 @@ describe('UserService', () => {
 
     it('should throw exception when try login with invalid user', async () => {
       mockUserFindOne.mockReturnValueOnce({
-        firstName: 'Ricardo',
-        lastName: 'Saraiva',
-        email: 'ricardo.saraiva@coderockr.com',
+        firstName: 'Test',
+        lastName: 'Test',
+        email: 'test@weef.com.br',
         id: 1,
         password:
           '$2b$10$uXn5EOZnFClXxs/O9IRNxOHOPbd3DJIckaqIDvvPwRNO8nq5kN/Om',
@@ -86,8 +80,8 @@ describe('UserService', () => {
 
       await expect(
         userService.login({
-          login: 'ricardo.saraiva@coderockr.com',
-          password: '78965412',
+          login: 'test@weef.com.br',
+          password: 'invalid',
         }),
       ).rejects.toThrow(ExceptionUnauthorized);
       expect(mockUserFindOne).toHaveBeenCalledTimes(1);
