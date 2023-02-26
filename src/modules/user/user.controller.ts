@@ -48,7 +48,7 @@ export class UserController {
     status: HttpStatus.UNPROCESSABLE_ENTITY,
     type: ErrorResponseUnprocessableEntityDto,
   })
-  async profile(@CurrentUser() user): Promise<User> {
+  async authTest(@CurrentUser() user): Promise<User> {
     return this.userService.findByID(user.user.id);
   }
 }
