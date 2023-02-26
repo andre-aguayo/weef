@@ -13,6 +13,6 @@ export default {
     update: 'update',
     delete: 'delete/:eventId',
     list: 'list',
-    find: '/:eventId',
+    find: ':eventId',
   },
 };
