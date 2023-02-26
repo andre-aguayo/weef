@@ -19,3 +19,6 @@ api_migrations_run:
 
 api_seeder_run:
 	docker-compose exec api bash -c "SEEDERS=1 yarn typeorm migration:run -d src/config/typeorm-cli.ts"
+
+api_test:
+	docker-compose exec api bash -c "yarn test"
