@@ -5,6 +5,7 @@ import {
   Delete,
   Get,
   HttpStatus,
+  Param,
   Post,
   Put,
   UseInterceptors,
@@ -32,14 +33,14 @@ export class EventController {
   @Get(routes.event.list)
   @Roles(Role.PRIVATE)
   @ApiBearerAuth()
-  @ApiResponse({ status: HttpStatus.OK, type: Event })
+  @ApiResponse({ status: HttpStatus.OK, type: [Event] })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ErrorResponseDto })
   @ApiResponse({
     status: HttpStatus.UNPROCESSABLE_ENTITY,
     type: ErrorResponseUnprocessableEntityDto,
   })
   async userEvents(@CurrentUser() user): Promise<Event[]> {
-    return this.eventService.list(user.user);
+    return await this.eventService.list(user.user);
   }
 
   @Get(routes.event.find)
@@ -52,10 +53,10 @@ export class EventController {
     type: ErrorResponseUnprocessableEntityDto,
   })
   async findById(
-    @Body() input: EventFindByIdDot,
+    @Param() input: EventFindByIdDot,
     @CurrentUser() user,
   ): Promise<Event> {
-    return this.eventService.findByID(input.eventId, user.user);
+    return await this.eventService.findByID(input.eventId, user.user);
   }
 
   @Post(routes.event.add)
@@ -68,7 +69,7 @@ export class EventController {
     type: ErrorResponseUnprocessableEntityDto,
   })
   async add(@Body() input: EventAddDot, @CurrentUser() user): Promise<Event> {
-    return this.eventService.add(input, user.user);
+    return await this.eventService.add(input, user.user);
   }
 
   @Put(routes.event.update)
@@ -84,7 +85,7 @@ export class EventController {
     @Body() input: EventUpdateDot,
     @CurrentUser() user,
   ): Promise<Event> {
-    return this.eventService.update(input, user.user);
+    return await this.eventService.update(input, user.user);
   }
 
   @Delete(routes.event.delete)
@@ -100,6 +101,6 @@ export class EventController {
     @Body() input: EventDeleteDot,
     @CurrentUser() user,
   ): Promise<Event> {
-    return this.eventService.delete(input, user.user);
+    return await this.eventService.delete(input, user.user);
   }
 }

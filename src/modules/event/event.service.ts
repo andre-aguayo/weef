@@ -16,15 +16,14 @@ export class EventService {
   ) {}
 
   async list(user: User): Promise<Event[]> {
-    return this.eventRepository.findBy({ userId: user.id });
+    return await this.eventRepository.findBy({ userId: user.id });
   }
 
   async findByID(eventId: string, user: User): Promise<Event> {
-    const event = this.eventRepository.findOneBy({
+    const event = await this.eventRepository.findOneBy({
       id: eventId,
       userId: user.id,
     });
-
     if (!event) throw new Exception('messages.event.errors.find');
 
     return event;
