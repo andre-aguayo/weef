@@ -1,5 +1,12 @@
 args=
 
+api_first_init:
+	cp .env.example .env
+	yarn install
+	docker compose up -d
+	make api_migrations_run
+	make api_seeder_run
+
 api_yarn:
 	docker compose run api bash -c "yarn ${args}"
 
