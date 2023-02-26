@@ -12,7 +12,7 @@ export class EventAddDot {
   @IsDateString()
   @MaxLength(50)
   @ApiProperty()
-  readonly eventDate: string;
+  readonly eventDate: Date;
 
   @IsString()
   @MaxLength(50)
